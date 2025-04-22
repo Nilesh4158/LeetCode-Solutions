@@ -1,4 +1,8 @@
+#include <vector>
+#include <string>
+#include <unordered_map>
 
+using namespace std;
 
 class Solution {
 public:
@@ -6,8 +10,7 @@ public:
         unordered_map<string, vector<string>> anagramGroups;
         
         for (const string& str : strs) {
-            string key = str;
-            sort(key.begin(), key.end());
+            string key = getKey(str);
             anagramGroups[key].push_back(str);
         }
         
@@ -17,5 +20,19 @@ public:
         }
         
         return result;
+    }
+    
+private:
+    string getKey(const string& str) {
+        int count[26] = {0};
+        for (char c : str) {
+            count[c - 'a']++;
+        }
+        
+        string key;
+        for (int i = 0; i < 26; ++i) {
+            key += to_string(count[i]) + '#';
+        }
+        return key;
     }
 };
